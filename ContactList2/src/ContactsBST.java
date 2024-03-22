@@ -47,7 +47,7 @@ public class ContactsBST {
 			else if(d.getName().compareTo(root.data.getName()) > 0) {
 				//insert new TreeNode
 				if(root.right == null) {
-					right = new TreeNode<E>(d);
+					root.right = new Tree(d);
 				}
 				else {//continue traversing right subtree recursively
 					right.insert(d);
