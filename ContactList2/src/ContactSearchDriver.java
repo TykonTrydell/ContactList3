@@ -26,24 +26,33 @@ public class ContactSearchDriver implements ContactInterface {
 			Scanner input = new Scanner(System.in);
 			//TODO use ContactsBST instead of a list, use insert method
 			String inputfilename = getInputFileName(input);
-			List<Contact> list = fillContactList(inputfilename);
-			list = sortContacts(list);//sort the Contacts in alphabetical order
-			
+			ContactsBST contactTree = fillContactList(inputfilename);
+					
 			int menucontrol = 0; //Variable that will control do.while and switch
 			do {
 				menucontrol = getMenuChoice(input);
 				switch (menucontrol) {
 					case MENU_ADD_A_CONTACT://add a contact
+						Contact contactAdd = getFullContact(input);
 						
 						break;
 					case MENU_REMOVE_A_CONTACT://remove a contact
-						
+						String contactRemove = getContactName(input);
+						Contact tempContact = contactTree.Search(contactRemove);
+							if (tempContact != null) {//if the contact does exist
+								contactTree.Remove(contactRemove);//remove it
+								System.out.println("Contact removed");//inform user
+							}
+							else {//otherwise, tell them that contact was not found.
+								System.out.println("Contact not found.");
+							}
 						break;
 					case MENU_DISPLAY_CONTACTS://display alphabetic
-						displayList(list);
+						contactTree.Print();
 						break;//break out of switch
 					case MENU_SEARCH_CONTACTS://search contact
-						binarySearch(list, input);//TODO call ContactsBTS instead
+						String contactSearch = getContactName(input);
+						contactTree.Search(contactSearch);//call contactsBTS instead
 						break;
 					case MENU_EXIT:
 						System.out.printf("%nGood-bye!");
@@ -128,87 +137,19 @@ public class ContactSearchDriver implements ContactInterface {
 			}
 			return newList;
 		}
-		
-		public static List<Contact> sortContacts(List<Contact> list){
-		
-			for (int i = 0; i < list.size() -1; i++) {
-				String first = list.get(i).getName();//assume first name in list is first
-				int lowerContactGoesHere = i;//to hold the index of the name it is swapping with
-				for (int index = i+1; index < list.size(); index++) {
-					String testName = list.get(index).getName();
-					if (testName.compareTo(first) < 0) {//if the new is before the first
-						first = list.get(index).getName();
-						lowerContactGoesHere = index;
-					}
-				}
-				if (i != lowerContactGoesHere) {//If the name needs to be moved farther down.
-					swap(list, i, lowerContactGoesHere, first);//swap the alphabetically first contact into position
-				}//else, the name doesn't need to move.
-			}
-			return list;
+		public static Contact getFullContact(Scanner input) {
+			input.nextLine();//clear the integer buffer
+			System.out.printf("Enter new contact name: ");
+			String tempName = input.nextLine();
+			System.out.printf("Enter new contact number: ");
+			String tempNumber = input.nextLine();
+			Contact tempContact = new Contact(tempName, tempNumber);
+			return tempContact;
 		}
-		
-		private static void swap(List<Contact> list, int location, int secondLocation, String contactName ) {
-			Contact tempContact2 = list.remove(secondLocation);//remove the second contact, since it is farther down
-			Contact tempContact = list.remove(location);//then the first contact
-			list.add(location, tempContact2);//and put the contact earlier, since that restores the second location
-			list.add(secondLocation, tempContact);//put the later down Contact back in.
-		}
-		
-		public static void displayList(List<Contact> list) {//print contacts in alphabetical order
-			for(int i= 0; i < list.size(); i++) {
-				System.out.println(list.get(i).toString());
-			}
-		}
-		
-		public static void displayReversedList(List<Contact> list) {//print contacts from bottom up.
-			for (int i= list.size()-1; i >= 0; i--) {
-				System.out.println(list.get(i).toString());
-			}
-		}
-		
-		public static void binarySearch(List<Contact>list, Scanner input) {//binary search if list is already sorted
+		public static String getContactName(Scanner input) {
 			input.nextLine();//clear out the integer buffer
 			System.out.printf("Enter contact name: ");
 			String name = input.nextLine();
-			int low = 0;
-			int high = list.size()-1;
-			int middle = (low + high + 1)/2;
-			int location = -1;
-			do {
-				//if the middle name is the name we are searching for
-				if (name.compareTo(list.get(middle).getName()) == 0){
-					location = middle;
-				}
-				//if the name we are searching for comes before the middle
-				else if (name.compareTo(list.get(middle).getName()) < 0) {
-					high = middle -1;//eliminate the later half.
-				}
-				
-				else {//if the name we are searching for comes after the middle
-					low = middle +1; //eliminate the first half
-				}
-				
-				middle = (low + high + 1)/2; //recalculate the middle
-			}while((low <= high) && (location == -1));
-			if (location == -1) {//if the name was not found
-				System.out.printf("%s was not found.%n", name);
-			}
-			else {//if it was, print the whole contact
-				System.out.println(list.get(location));
-			}
-			
-		}
-		
-		public static void linearSearch(List<Contact> list, Scanner input) {//linear search if list is not sorted
-			input.nextLine();//clear out integer buffer
-			System.out.printf("Enter contact name: ");
-			String name = input.nextLine();
-			for (int index = 0; index < list.size(); index++) {
-				if (list.get(index).getName().compareTo(name) == 0) {
-					System.out.println(list.get(index));//only print out contact if it was found.
-				}
-			}
-		}
-	
+			return name;
+		}	
 }
