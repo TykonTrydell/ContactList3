@@ -33,17 +33,18 @@ public class ContactSearchDriver implements ContactInterface {
 			do {
 				menucontrol = getMenuChoice(input);
 				switch (menucontrol) {
-					case MENU_DISPLAY_ALPHABETIC_LIST://TODO ADD a Contact
+					case MENU_ADD_A_CONTACT://add a contact
+						
+						break;
+					case MENU_REMOVE_A_CONTACT://remove a contact
+						
+						break;
+					case MENU_DISPLAY_CONTACTS://display alphabetic
 						displayList(list);
 						break;//break out of switch
-					case MENU_DISPLAY_REVERSE_LIST://TODO remove a contact
-						displayReversedList(list);
+					case MENU_SEARCH_CONTACTS://search contact
+						binarySearch(list, input);//TODO call ContactsBTS instead
 						break;
-					case MENU_SEARCH_CONTACTS://TODO display alphabetic
-						binarySearch(list, input);//since the list will be sorted by the time it gets here, use binary search.
-						break;//otherwise would call the linearSearch method.
-					case: //TODO search a contact
-						
 					case MENU_EXIT:
 						System.out.printf("%nGood-bye!");
 						break;
@@ -57,22 +58,23 @@ public class ContactSearchDriver implements ContactInterface {
 		
 		public static int getMenuChoice(Scanner input) {
 			int numberselect = 0;
-			String errormessage = "Error: Selection must be between " + MENU_DISPLAY_ALPHABETIC_LIST +
+			String errormessage = "Error: Selection must be between " + MENU_ADD_A_CONTACT +
 					" and " + MENU_EXIT + " inclusively.";
 			do {
 				System.out.println(""); //for readability
 				System.out.println("Contact List");
 				System.out.println("------------");
 				System.out.println("Select one of the following operations:");
-				System.out.printf("%d - Display contacts in alphabetical order%n", MENU_DISPLAY_ALPHABETIC_LIST);
-				System.out.printf("%d - Display contacts in reverse alphabetical order%n", MENU_DISPLAY_REVERSE_LIST);
-				System.out.printf("%d - Search contacts%n", MENU_SEARCH_CONTACTS);
-				System.out.printf("%d - Exit%n",MENU_EXIT);
+				System.out.printf("%d. Add a contact%n", MENU_ADD_A_CONTACT);
+				System.out.printf("%d. Remove a contact%n", MENU_REMOVE_A_CONTACT);
+				System.out.printf("%d. Display contacts in alphabetical order%n", MENU_DISPLAY_CONTACTS);
+				System.out.printf("%d. Search contacts%n", MENU_SEARCH_CONTACTS);
+				System.out.printf("%d. Exit%n",MENU_EXIT);
 			
 				try {
 					System.out.print("Enter your selection here: ");
 					numberselect = input.nextInt();
-					if(numberselect < MENU_DISPLAY_ALPHABETIC_LIST || numberselect > MENU_EXIT) {
+					if(numberselect < MENU_ADD_A_CONTACT || numberselect > MENU_EXIT) {
 						System.out.printf("%n%s%n", errormessage);
 					}	
 				}
@@ -82,7 +84,7 @@ public class ContactSearchDriver implements ContactInterface {
 					System.out.printf("%n%s%n", errormessage);
 				}
 				
-			}while(numberselect < MENU_DISPLAY_ALPHABETIC_LIST || numberselect > MENU_EXIT);
+			}while(numberselect < MENU_ADD_A_CONTACT || numberselect > MENU_EXIT);
 			return numberselect;
 		}//end method getMenuChoice
 		
