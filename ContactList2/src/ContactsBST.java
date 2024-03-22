@@ -30,7 +30,7 @@ public class ContactsBST {
 		}
 	}
 	
-	public void Insert(Contact d) { 
+	public void Insert(Contact d) { //TODO issue with adding the list
 		
 		if (root == null) {	//empty tree, insert the first element
 			root = new Tree(d);//create root node from the first element
