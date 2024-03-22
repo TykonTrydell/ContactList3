@@ -18,15 +18,14 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
-import java.util.ArrayList;
 public class ContactSearchDriver implements ContactInterface {
 		public static void main(String[] args) {
 			Scanner input = new Scanner(System.in);
-			//TODO use ContactsBST instead of a list, use insert method
+			ContactsBST contactTree = new ContactsBST();
+			
 			String inputfilename = getInputFileName(input);
-			ContactsBST contactTree = fillContactList(inputfilename);
+			contactTree = fillContactList(inputfilename, contactTree);
 					
 			int menucontrol = 0; //Variable that will control do.while and switch
 			do {
@@ -34,7 +33,7 @@ public class ContactSearchDriver implements ContactInterface {
 				switch (menucontrol) {
 					case MENU_ADD_A_CONTACT://add a contact
 						Contact contactAdd = getFullContact(input);
-						
+						contactTree.Insert(contactAdd);
 						break;
 					case MENU_REMOVE_A_CONTACT://remove a contact
 						String contactRemove = getContactName(input);
@@ -116,9 +115,8 @@ public class ContactSearchDriver implements ContactInterface {
 			return inputfilename;
 		}//end method getInputFileName
 		
-		public static List<Contact> fillContactList (String inputFileName) {
-			//read a list of contacts from a file into a list<Contact>
-			List<Contact> newList = new ArrayList<Contact>();
+		public static ContactsBST fillContactList (String inputFileName, ContactsBST tree) {
+			//read a list of contacts from a file into a ContactsBST tree
 			try{
 				File inFile = new File(inputFileName);
 				Scanner filefinder = new Scanner(inFile);//reinitialize the incoming file
@@ -128,15 +126,16 @@ public class ContactSearchDriver implements ContactInterface {
 					String tempName = str[0] + " " + str[1];
 					String tempNumber = str[2];
 					Contact tempContact = new Contact(tempName, tempNumber);
-					newList.add(tempContact);
+					tree.Insert(tempContact);
 				}
 				filefinder.close();
 			}
 			catch(IOException e) {
 				System.err.print("File not found. Please try again");
 			}
-			return newList;
-		}
+			return tree;
+		}//end method fillContactList
+		
 		public static Contact getFullContact(Scanner input) {
 			input.nextLine();//clear the integer buffer
 			System.out.printf("Enter new contact name: ");
@@ -145,11 +144,12 @@ public class ContactSearchDriver implements ContactInterface {
 			String tempNumber = input.nextLine();
 			Contact tempContact = new Contact(tempName, tempNumber);
 			return tempContact;
-		}
+		}//end method getFullContact;
+		
 		public static String getContactName(Scanner input) {
 			input.nextLine();//clear out the integer buffer
 			System.out.printf("Enter contact name: ");
 			String name = input.nextLine();
 			return name;
-		}	
+		}//end method getContactName
 }

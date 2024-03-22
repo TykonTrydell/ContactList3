@@ -15,6 +15,7 @@ public class ContactsBST {
 	public Contact Search(String name) {
 		
 		if (root == null) {	//empty tree
+			
 			//TODO
 		}
 		else {
@@ -29,9 +30,29 @@ public class ContactsBST {
 	public void Insert(Contact d) { 
 		
 		if (root == null) {	//empty tree, insert the first element
-			//TODO
+			root = new Tree(d);//create root node from the first element
 		}
-		else {
+		else {//call the insert method
+			//insert in left subtree
+			if (d.getName().compareTo(root.data.getName()) < 0) {
+				//insert new TreeNode
+				if(root.left == null) {
+					root.left = new Tree(d);
+				}
+				else {//continue traversing left subtree recursively
+					left.Insert(d);
+				}
+			}
+			//insert in right subtree
+			else if(d.getName().compareTo(root.data.getName()) > 0) {
+				//insert new TreeNode
+				if(root.right == null) {
+					right = new TreeNode<E>(d);
+				}
+				else {//continue traversing right subtree recursively
+					right.insert(d);
+				}
+			}
 			//Search for correct location to insert the new contact
 			//TODO: similar to the search, but need to keep track of the parent
 			//to be able to add the element as a child to the parent
