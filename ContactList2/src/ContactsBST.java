@@ -15,15 +15,18 @@ public class ContactsBST {
 	public Contact Search(String name) {
 		
 		if (root == null) {	//empty tree
-			
-			//TODO
+			return null;
 		}
 		else {
-			//TODO: Search for the name. Start at the root.
-			//Compare the name the current contact's name.
-			//If they are equal, contact found.
-			//If the name is greater, move to the right subtree
-			//If it's smaller move to the left subtree
+			if(name.compareTo(root.data.getName()) == 0) {//If they are equal, contact found.
+				return root.data;
+			}
+			else if(name.compareTo(root.data.getName()) < 0) {//If it's smaller move to the left subtree
+				return Search(name);
+			}
+			else {//If the name is greater, move to the right subtree
+				return Search(name);
+			}
 		}
 	}
 	
@@ -40,7 +43,7 @@ public class ContactsBST {
 					root.left = new Tree(d);
 				}
 				else {//continue traversing left subtree recursively
-					left.Insert(d);
+					Insert(d);
 				}
 			}
 			//insert in right subtree
@@ -50,7 +53,7 @@ public class ContactsBST {
 					root.right = new Tree(d);
 				}
 				else {//continue traversing right subtree recursively
-					right.insert(d);
+					Insert(d);
 				}
 			}
 			//Search for correct location to insert the new contact
@@ -63,14 +66,17 @@ public class ContactsBST {
 		}
 	}
 	
-	public void Print() {
-		//TODO: Display all the contacts in alphabetic order
-		//Hint: use the PrintInOrder function
+	public void Print() {//Display all the contacts in alphabetic order
+		PrintInOrder(root);//Hint: use the PrintInOrder function		
 	}
 	
-	private void PrintInOrder(Tree n) {
-		//TODO: Display all the contacts in-order
-		//Hint: Recursion
+	private void PrintInOrder(Tree node) {//Display all the contacts in-order: left, root, right
+		if (node == null) {//if the node is null, don't do anything
+			return;
+		}
+		PrintInOrder(node.left);//traverse left subtree
+		System.out.printf("%s ", node.data);//output node data
+		PrintInOrder(node.right);//traverse right subtree
 	}
 	
 	public Contact Remove(String name) {//DO NOT MODIFY
@@ -136,6 +142,5 @@ public class ContactsBST {
 			System.out.println("\nContact not found.\n");
 			return new Contact();
 		}
-	}
-	
+	}	
 }
