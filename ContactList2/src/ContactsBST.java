@@ -36,35 +36,30 @@ public class ContactsBST {
 		if (root == null) {	//empty tree, insert the first element
 			root = new Tree(d);//create root node from the first element
 		}
-		else {//call the insert method
-			Tree t = root, parent = null;
-			//insert in left subtree
-			if (d.getName().compareTo(root.data.getName()) < 0) {
-				//insert new TreeNode
-				if(root.left == null) {
-					root.left = new Tree(d);
+		else { //tree is not empty
+			Tree t = root, parent = null;//need to keep track of parent
+			while (t != null) {//because the root exists
+				if (t.data.getName().compareTo(d.getName()) < 0) {//If contact needs to go left
+					if (t.left == null) {
+						t.left = new Tree(d);//make a new tree in the left node
+						t = null;//change t to get out of the while loop
+					}
+					else {//otherwise, do it again but shift to the left
+						parent = t;
+						t= t.left;
+					}
 				}
-				else {//continue traversing left subtree recursively
-					Insert(root.left);
+				else {//contact is alphabetically greater than current node-> move right
+					if (t.right == null) {
+						t.right = new Tree(d);//make a new tree in the right node
+						t = null;//change t to get out of the while loop
+					}
+					else {
+						parent = t;
+						t = t.right;
+					}
 				}
 			}
-			//insert in right subtree
-			else if(d.getName().compareTo(root.data.getName()) > 0) {
-				//insert new TreeNode
-				if(root.right == null) {
-					root.right = new Tree(d);
-				}
-				else {//continue traversing right subtree recursively
-					Insert(d);
-				}
-			}
-			//Search for correct location to insert the new contact
-			//TODO: similar to the search, but need to keep track of the parent
-			//to be able to add the element as a child to the parent
-			
-			
-			//insert new Tree in correct location
-			//TODO
 		}
 	}
 	
@@ -76,8 +71,9 @@ public class ContactsBST {
 		if (node == null) {//if the node is null, don't do anything
 			return;
 		}
+		//TODO printing in reverse alphabetical
 		PrintInOrder(node.left);//traverse left subtree
-		System.out.printf("%s ", node.data);//output node data
+		System.out.printf("%s%n", node.data);//output node data
 		PrintInOrder(node.right);//traverse right subtree
 	}
 	
