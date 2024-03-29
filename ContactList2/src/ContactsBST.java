@@ -12,10 +12,11 @@ public class ContactsBST {
 		root = null; //empty tree
 	}
 	
+	
 	public Contact Search(String name) {
 		
-		if (root == null) {	//empty tree
-			return null;
+		if (root == null) {	
+			return null;//If tree is empty, there is nothing to find.
 		}
 		else {
 			if(name.compareTo(root.data.getName()) == 0) {//If they are equal, contact found.
@@ -36,6 +37,7 @@ public class ContactsBST {
 			root = new Tree(d);//create root node from the first element
 		}
 		else {//call the insert method
+			Tree t = root, parent = null;
 			//insert in left subtree
 			if (d.getName().compareTo(root.data.getName()) < 0) {
 				//insert new TreeNode
@@ -43,7 +45,7 @@ public class ContactsBST {
 					root.left = new Tree(d);
 				}
 				else {//continue traversing left subtree recursively
-					Insert(d);
+					Insert(root.left);
 				}
 			}
 			//insert in right subtree
