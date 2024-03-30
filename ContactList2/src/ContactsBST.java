@@ -13,18 +13,17 @@ public class ContactsBST {
 	}
 	
 	public Contact Search(String name) {
-		Contact tempContact = null;
-		
 		if (root == null) {	
 			return null;//If tree is empty, there is nothing to find.
 		}
 		else {
 			Tree t = root, parent = null;
 			while (t != null) {
-				if(name.compareTo(root.data.getName()) == 0) {//If they are equal, contact found.
-					tempContact = root.data;
+				if(name.compareTo(t.data.getName()) == 0) {//If they are equal, contact found.
+					System.out.println(t.data);
+					t = null;
 				}
-				else if(name.compareTo(root.data.getName()) < 0) {//If it's smaller move to the left subtree
+				else if(name.compareTo(t.data.getName()) < 0) {//If it's smaller move to the left subtree
 					parent = t;
 					t = t.left;
 				}
@@ -34,11 +33,10 @@ public class ContactsBST {
 				}
 			}	
 		}
-		return tempContact;
+		return new Contact();
 	}
 	
 	public void Insert(Contact d) {
-		
 		if (root == null) {	//empty tree, insert the first element
 			root = new Tree(d);//create root node from the first element
 		}
