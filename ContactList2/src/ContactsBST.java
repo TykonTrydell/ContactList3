@@ -12,26 +12,32 @@ public class ContactsBST {
 		root = null; //empty tree
 	}
 	
-	
 	public Contact Search(String name) {
+		Contact tempContact = null;
 		
 		if (root == null) {	
 			return null;//If tree is empty, there is nothing to find.
 		}
 		else {
-			if(name.compareTo(root.data.getName()) == 0) {//If they are equal, contact found.
-				return root.data;
-			}
-			else if(name.compareTo(root.data.getName()) < 0) {//If it's smaller move to the left subtree
-				return Search(name);
-			}
-			else {//If the name is greater, move to the right subtree
-				return Search(name);
-			}
+			Tree t = root, parent = null;
+			while (t != null) {
+				if(name.compareTo(root.data.getName()) == 0) {//If they are equal, contact found.
+					tempContact = root.data;
+				}
+				else if(name.compareTo(root.data.getName()) < 0) {//If it's smaller move to the left subtree
+					parent = t;
+					t = t.left;
+				}
+				else {//If the name is greater, move to the right subtree
+					parent = t;
+					t = t.right;
+				}
+			}	
 		}
+		return tempContact;
 	}
 	
-	public void Insert(Contact d) { //TODO issue with adding the list
+	public void Insert(Contact d) {
 		
 		if (root == null) {	//empty tree, insert the first element
 			root = new Tree(d);//create root node from the first element
@@ -39,7 +45,7 @@ public class ContactsBST {
 		else { //tree is not empty
 			Tree t = root, parent = null;//need to keep track of parent
 			while (t != null) {//because the root exists
-				if (t.data.getName().compareTo(d.getName()) < 0) {//If contact needs to go left
+				if (t.data.getName().compareTo(d.getName()) > 0) {//If contact needs to go left
 					if (t.left == null) {
 						t.left = new Tree(d);//make a new tree in the left node
 						t = null;//change t to get out of the while loop
@@ -64,14 +70,13 @@ public class ContactsBST {
 	}
 	
 	public void Print() {//Display all the contacts in alphabetic order
-		PrintInOrder(root);//Hint: use the PrintInOrder function		
+		PrintInOrder(root);	
 	}
 	
 	private void PrintInOrder(Tree node) {//Display all the contacts in-order: left, root, right
 		if (node == null) {//if the node is null, don't do anything
 			return;
 		}
-		//TODO printing in reverse alphabetical
 		PrintInOrder(node.left);//traverse left subtree
 		System.out.printf("%s%n", node.data);//output node data
 		PrintInOrder(node.right);//traverse right subtree

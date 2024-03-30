@@ -37,21 +37,15 @@ public class ContactSearchDriver implements ContactInterface {
 						break;
 					case MENU_REMOVE_A_CONTACT://remove a contact
 						String contactRemove = getContactName(input);
-						Contact tempContact = contactTree.Search(contactRemove);
-							if (tempContact != null) {//if the contact does exist
-								contactTree.Remove(contactRemove);//remove it
-								System.out.println("Contact removed");//inform user
-							}
-							else {//otherwise, tell them that contact was not found.
-								System.out.println("Contact not found.");
-							}
+						contactTree.Remove(contactRemove);
 						break;
 					case MENU_DISPLAY_CONTACTS://display alphabetic
 						contactTree.Print();
 						break;//break out of switch
 					case MENU_SEARCH_CONTACTS://search contact
 						String contactSearch = getContactName(input);
-						contactTree.Search(contactSearch);//call contactsBTS instead
+						Contact tempContact = contactTree.Search(contactSearch);//call contactsBTS instead
+						System.out.println(tempContact);
 						break;
 					case MENU_EXIT:
 						System.out.printf("%nGood-bye!");
@@ -82,6 +76,7 @@ public class ContactSearchDriver implements ContactInterface {
 				try {
 					System.out.print("Enter your selection here: ");
 					numberselect = input.nextInt();
+					System.out.println();
 					if(numberselect < MENU_ADD_A_CONTACT || numberselect > MENU_EXIT) {
 						System.out.printf("%n%s%n", errormessage);
 					}	
