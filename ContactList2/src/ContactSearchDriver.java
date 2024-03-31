@@ -38,7 +38,7 @@ public class ContactSearchDriver implements ContactInterface {
 					case MENU_REMOVE_A_CONTACT://remove a contact
 						String contactRemove = getContactName(input);
 						Contact tempContact = contactTree.Remove(contactRemove);
-						if (tempContact.getName().compareTo(contactRemove) == 0) {//if the contact
+						if (tempContact.getName() != null) {//if the contact
 							System.out.println("Contact removed!");//was removed, state the fact.
 						}
 						break;
