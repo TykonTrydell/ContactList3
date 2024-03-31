@@ -42,12 +42,12 @@ public class ContactSearchDriver implements ContactInterface {
 							System.out.println("Contact removed!");//was removed, state the fact.
 						}
 						break;
-					case MENU_DISPLAY_CONTACTS://display alphabetic
+					case MENU_DISPLAY_CONTACTS://display in alphabetic order
 						contactTree.Print();
-						break;//break out of switch
+						break;
 					case MENU_SEARCH_CONTACTS://search contact
 						String contactSearch = getContactName(input);
-						contactTree.Search(contactSearch);//call contactsBTS instead
+						contactTree.Search(contactSearch);
 						break;
 					case MENU_EXIT:
 						System.out.printf("%nGood-bye!");
