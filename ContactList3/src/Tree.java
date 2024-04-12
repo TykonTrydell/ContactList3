@@ -8,12 +8,12 @@
 */
 public class Tree<T> {
 	
-	T data;
+	Contact data;
 	Tree<T> left;
 	Tree<T> right;
 	
 	public Tree(T d) {
-		data = d;
+		data = (Contact)d;
 		left = null;
 		right = null;
 	}
