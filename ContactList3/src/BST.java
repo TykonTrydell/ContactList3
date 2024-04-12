@@ -24,11 +24,11 @@ public class BST<T extends Comparable<T>>{
 			Tree<Comparable<T>> t = (Tree<Comparable<T>>) root, parent = null;
 			
 			while (t != null) {
-				if(((Comparable<T>)contact).compareTo((T)(t.data).getName()) == 0) {//If they are equal, contact found.
+				if(((Contact)contact).compareTo((t.data)) == 0) {//If they are equal, contact found.
 					System.out.println(t.data);
 					t = null;
 				}
-				else if(((Comparable<T>)contact).compareTo((T)(t.data).getName()) < 0) {//If it's smaller move to the left subtree
+				else if(((Contact)contact).compareTo((t.data)) < 0) {//If it's smaller move to the left subtree
 					parent = t;
 					t = t.left;
 				}

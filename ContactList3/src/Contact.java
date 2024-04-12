@@ -30,10 +30,12 @@ public class Contact implements Comparable<Contact>{
 	public void setNumber(String newNumber) {
 		contactNumber = newNumber;
 	}
+	
 	public String toString() {
 		String result = String.format("Contact [%s: %s]", getName(), getNumber());
 		return result;
 	}
+	
 	@Override
 	public int compareTo(Contact c) {
 		int contactPosition = c.getName().compareTo(contactName);

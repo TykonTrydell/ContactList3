@@ -39,7 +39,7 @@ public class ContactSearchDriver implements ContactInterface {
 				case MENU_REMOVE_A_CONTACT://remove a contact
 					String contactRemove = getContactName(input, "remove");//Can't send in a string, so
 					Contact tempContact = new Contact(contactRemove, "Removed");//make a Contact 
-					tempContact = (Contact)tree.Remove((T) tempContact);
+					tempContact = (Contact)tree.Remove(tempContact);
 					//Cast as a T to go into method, then turn back to Contact after the method
 					if (tempContact.getName() != null) {//if the contact
 						System.out.println("Contact removed!");//was removed, state the fact.
@@ -51,7 +51,7 @@ public class ContactSearchDriver implements ContactInterface {
 				case MENU_SEARCH_CONTACTS://search contact
 					String contactSearch = getContactName(input, "search");//send in verb, so sentence
 					tempContact = new Contact(contactSearch, "Search");//is correct.
-					tree.Search((T)tempContact);//cast it as T so the method works.
+					tree.Search(tempContact);//send it to the generic method
 					break;
 				case MENU_EXIT:
 					System.out.printf("%nGood-bye!");
