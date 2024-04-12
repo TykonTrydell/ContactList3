@@ -1,7 +1,8 @@
  /** Class of Objects called Contacts. Holds their names and numbers.
  * Implement a constructor and get/set methods, as well as a ToString
  * 2.0
- * 
+ * Implements Comparable, overriding the compareTo method so that the parameter
+ * contact is compared against the Object.
  * @author Daniel Holt
  * @version 2.0
  * Due Date: 4/14/2024
