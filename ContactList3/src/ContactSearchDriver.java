@@ -11,7 +11,7 @@
  * modify menu to: Add Contact, Remove Contact, Display Contact, Search for Contact
  * and exit, using ContactsBST where needed.
  * 3.0
- * 
+ * Use generic BST class.
 * @author Daniel Holt
 * @version 3.0
  * Due Date: 4/14/2024
@@ -21,9 +21,9 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 public class ContactSearchDriver implements ContactInterface {
-		public static void main(String[] args) {
+		public static <T> void main(String[] args) {
 			Scanner input = new Scanner(System.in);
-			ContactsBST contactTree = new ContactsBST();
+			BST<T> contactTree = new BST<T>();
 			
 			String inputfilename = getInputFileName(input);
 			contactTree = fillContactList(inputfilename, contactTree);
@@ -37,8 +37,10 @@ public class ContactSearchDriver implements ContactInterface {
 						contactTree.Insert(contactAdd);
 						break;
 					case MENU_REMOVE_A_CONTACT://remove a contact
-						String contactRemove = getContactName(input);
-						Contact tempContact = contactTree.Remove(contactRemove);
+						String contactRemove = getContactName(input);//Can't send in a string, so
+						Contact tempContact = new Contact(contactRemove, "Removed");//make a Contact 
+						tempContact = (Contact)contactTree.Remove((T) tempContact);
+						//Cast as a T to go into method, then turn back to Contact after the method
 						if (tempContact.getName() != null) {//if the contact
 							System.out.println("Contact removed!");//was removed, state the fact.
 						}
@@ -48,7 +50,8 @@ public class ContactSearchDriver implements ContactInterface {
 						break;
 					case MENU_SEARCH_CONTACTS://search contact
 						String contactSearch = getContactName(input);
-						contactTree.Search(contactSearch);
+						tempContact = new Contact(contactSearch, "Search");
+						contactTree.Search((T)tempContact);//cast it as T so the method works.
 						break;
 					case MENU_EXIT:
 						System.out.printf("%nGood-bye!");
@@ -113,8 +116,8 @@ public class ContactSearchDriver implements ContactInterface {
 			return inputfilename;
 		}//end method getInputFileName
 		
-		public static ContactsBST fillContactList (String inputFileName, ContactsBST tree) {
-			//read a list of contacts from a file into a ContactsBST tree
+		public static BST fillContactList (String inputFileName, BST tree) {
+			//read a list of contacts from a file into a BST
 			try{
 				File inFile = new File(inputFileName);
 				Scanner filefinder = new Scanner(inFile);//reinitialize the incoming file
