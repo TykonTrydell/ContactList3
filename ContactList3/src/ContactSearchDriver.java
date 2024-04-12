@@ -11,7 +11,7 @@
  * modify menu to: Add Contact, Remove Contact, Display Contact, Search for Contact
  * and exit, using ContactsBST where needed.
  * 3.0
- * Use generic BST class.
+ * Use generic BST class, changing code to accept generic objects
 * @author Daniel Holt
 * @version 3.0
  * Due Date: 4/14/2024
@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 public class ContactSearchDriver implements ContactInterface {
-	public static <T> void main(String[] args) {
+	public static <T extends Comparable<T>> void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		BST<T> tree = new BST<T>();
 		
@@ -37,7 +37,7 @@ public class ContactSearchDriver implements ContactInterface {
 					tree.Insert(contactAdd);
 					break;
 				case MENU_REMOVE_A_CONTACT://remove a contact
-					String contactRemove = getContactName(input);//Can't send in a string, so
+					String contactRemove = getContactName(input, "remove");//Can't send in a string, so
 					Contact tempContact = new Contact(contactRemove, "Removed");//make a Contact 
 					tempContact = (Contact)tree.Remove((T) tempContact);
 					//Cast as a T to go into method, then turn back to Contact after the method
@@ -49,8 +49,8 @@ public class ContactSearchDriver implements ContactInterface {
 					tree.Print();
 					break;
 				case MENU_SEARCH_CONTACTS://search contact
-					String contactSearch = getContactName(input);
-					tempContact = new Contact(contactSearch, "Search");
+					String contactSearch = getContactName(input, "search");//send in verb, so sentence
+					tempContact = new Contact(contactSearch, "Search");//is correct.
 					tree.Search((T)tempContact);//cast it as T so the method works.
 					break;
 				case MENU_EXIT:
@@ -114,7 +114,7 @@ public class ContactSearchDriver implements ContactInterface {
 		return inputfilename;
 	}//end method getInputFileName
 		
-	public static BST<T> fillContactList (String inputFileName, BST<T> tree) {
+	public static <T extends Comparable<T>> BST<T> fillContactList (String inputFileName, BST<T> tree) {
 		//read a list of contacts from a file into a BST
 		try{
 			File inFile = new File(inputFileName);
@@ -145,9 +145,9 @@ public class ContactSearchDriver implements ContactInterface {
 		return tempContact;
 	}//end method getFullContact;
 		
-	public static String getContactName(Scanner input) {
+	public static String getContactName(Scanner input, String verb) {
 		input.nextLine();//clear out the integer buffer
-		System.out.printf("Enter contact name to remove: ");
+		System.out.printf("Enter contact name to " + verb +": ");
 		String name = input.nextLine();
 		return name;
 	}//end method getContactName
