@@ -21,19 +21,16 @@ public class BST<T extends Comparable<T>>{
 			return null;//If tree is empty, there is nothing to find.
 		}
 		else {
-			Tree<Comparable<T>> t = (Tree<Comparable<T>>) root, parent = null;
-			
+			Tree<Comparable<T>> t = (Tree<Comparable<T>>) root;
 			while (t != null) {
 				if(((Contact)contact).compareTo((t.data)) == 0) {//If they are equal, contact found.
 					System.out.println(t.data);
-					t = null;
+					return t.data;
 				}
 				else if(((Contact)contact).compareTo((t.data)) < 0) {//If it's smaller move to the left subtree
-					parent = t;
 					t = t.left;
 				}
 				else {//If the name is greater, move to the right subtree
-					parent = t;
 					t = t.right;
 				}
 			}	

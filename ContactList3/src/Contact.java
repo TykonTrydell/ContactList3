@@ -7,7 +7,7 @@
  * @version 2.0
  * Due Date: 4/14/2024
  */
-public class Contact implements Comparable<Contact>{
+public class Contact implements Comparable<Contact> {
 	public String contactName;
 	public String contactNumber;
 	
@@ -38,7 +38,7 @@ public class Contact implements Comparable<Contact>{
 	
 	@Override
 	public int compareTo(Contact c) {
-		int contactPosition = c.getName().compareTo(contactName);
+		int contactPosition = c.getName().compareTo(this.contactName);
 		return contactPosition;
 	}
 }
